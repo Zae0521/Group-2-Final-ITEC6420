@@ -6,7 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.*;
+import java.lang.*;
 
 @Table(name = "cars")
 @Entity
@@ -27,6 +30,9 @@ public class Car {
 	
 	@Column(name = "price")
 	private Double price;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "carObject")
+	private List<Inventory> inventories;
 
 	public Integer getId() {
 		return id;
