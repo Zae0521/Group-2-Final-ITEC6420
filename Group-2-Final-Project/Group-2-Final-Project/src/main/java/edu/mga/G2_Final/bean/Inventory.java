@@ -24,7 +24,11 @@ public class Inventory {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "foreign_car_id")
 	private Car carObject = new Car();
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "foreign_branch_id")
+	private Branch branchObject = new Branch();
+
 	@Column(name = "branchId")
 	private Integer branchId;
 	
@@ -53,6 +57,7 @@ public class Inventory {
 	}
 	
 	public void setBranchId(Integer branchId) {
+		this.branchObject.setId(branchId);
 		this.branchId = branchId;
 	}
 

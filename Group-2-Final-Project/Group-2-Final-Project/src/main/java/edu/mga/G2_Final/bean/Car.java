@@ -32,7 +32,7 @@ public class Car {
 	private Double price;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "carObject")
-	private List<Inventory> inventories;
+	private List<Inventory> inventories = new ArrayList<Inventory>();
 
 	public Integer getId() {
 		return id;

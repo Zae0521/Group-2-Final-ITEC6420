@@ -6,7 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.*;
+import java.lang.*;
 
 @Table(name = "branches")
 @Entity
@@ -33,6 +36,9 @@ public class Branch {
 	
 	@Column(name = "phone")
 	private String phone;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "branchObject")
+	private List<Inventory> inventories = new ArrayList<Inventory>();
 	
 	public Integer getId() {
 		return id;
