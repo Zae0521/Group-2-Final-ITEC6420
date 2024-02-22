@@ -40,7 +40,7 @@ open firewall @ 0.0.0.0/0:8080
 
 # apt.
 sudo apt update
-sudo apt install -y maven mysql-client-8.0/focal-updates net-tools
+sudo apt install -y maven mysql-client-8.0/focal-updates net-tools apache2
 
 # fix application.yml or application.properties:
 #   mind the remote host.
