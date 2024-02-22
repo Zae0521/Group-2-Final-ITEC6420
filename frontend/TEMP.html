@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<meta description="ITEC 6420 Final Assignment - Cal McNamara, Mehdy Faik, Adam Hudnall, Zae Thomas, Tom J"/>
+		<style>
+			.deleteBtn:hover {color:white;}
+		</style>
+	</head>
+	<body style="text-shadow: -2px -2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF, 2px 2px 0 #FFF; font-family:'Trebuchet MS'; ">
+		<div id="commandsArea" style="margin-top:100px;">
+			<h1 style="text-align:center;">AVAILABLE COMMANDS</h1>
+			<br/>
+			<p style="text-align:center;">VEHICLE: </p>
+			<p style="width:95%;margin:0px auto;text-align:center;"><input id="vehID" type="text" placeholder="ID" style="width:40px;"/> <input id="vehYear" type="text" placeholder="Year" style="width:45px;"/> <input id="vehMake" type="text" placeholder="Make" style="width:100px;"/> <input id="vehType" type="text" placeholder="Type" style="width:100px;"/> <input id="vehPrice" type="text" placeholder="Price" style="width:50px;"/> <input type="button" id="btnCreateVehicle" value="CREATE" onclick="executeCMD('createCar');" style="padding:3px;font-weight:bolder;cursor:pointer;"/> <input type="button" onclick="executeCMD('updateCar');" id="btnUpdateVehicle" value="UPDATE" style="padding:3px;font-weight:bolder;cursor:pointer;"/> <input class="deleteBtn" onclick="executeCMD('deleteCar');" id="btnDeleteVehicle" type="button" value="DELETE" style="background-color:red;padding:5px;font-weight:bolder;border-radius:5px;cursor:pointer;"/></p>
+			<br/>
+			<p style="text-align:center;">BRANCH: </p>
+			<p style="width:95%;margin:0px auto;text-align:center;"><input id="braID" type="text" placeholder="ID" style="width:40px;"/> <input id="braName" type="text" placeholder="Name" style="width:45px;"/> <input id="braAddress" type="text" placeholder="Address" style="width:100px;"/> <input id="braCity" type="text" placeholder="City" style="width:100px;"/> <input id="braZip" type="text" placeholder="Zip" style="width:150px;"/> <input id="braPhone" type="text" placeholder="Phone" style="width:150px;"/> <input id="braState" type="text" placeholder="State" style="width:150px;"/> <input type="button" id="btnCreateBranch" value="CREATE" onclick="executeCMD('createBranch');" style="padding:3px;font-weight:bolder;cursor:pointer;"/> <input type="button" id="btnUpdateBranch" onclick="executeCMD('updateBranch');" value="UPDATE" style="padding:3px;font-weight:bolder;cursor:pointer;"/> <input class="deleteBtn" id="btnDeleteBranch" onclick="executeCMD('deleteBranch');" type="button" value="DELETE" style="background-color:red;padding:5px;font-weight:bolder;border-radius:5px;cursor:pointer;"/></p>
+			<br/>
+			<p style="text-align:center;">INVENTORY: </p>
+			<p style="width:95%;margin:0px auto;text-align:center;"><input id="invID" type="text" placeholder="ID" style="width:40px;"/> <input id="invVeh" type="text" placeholder="vehID" style="width:45px;"/> <input id="invBra" type="text" placeholder="braID" style="width:100px;"/> <input id="invQuantity" type="text" placeholder="Quantity" style="width:100px;"/> <input type="button" id="btnCreateInventory"onclick="executeCMD('createInventory');"  value="CREATE" style="padding:3px;font-weight:bolder;cursor:pointer;"/> <input type="button" id="btnUpdateInventory"onclick="executeCMD('updateInventory');"  value="UPDATE" style="padding:3px;font-weight:bolder;cursor:pointer;"/> <input class="deleteBtn" id="btnDeleteInventory"onclick="executeCMD('deleteInventory');"  type="button" value="DELETE" style="background-color:red;padding:5px;font-weight:bolder;border-radius:5px;cursor:pointer;"/></p>
+		</div>
+		<div id="recordsArea" style="margin-top:100px;">
+			<h1 style="text-align:center;">CURRENT RECORDS</h1>
+			<br/>
+			<h2 style="text-align:center;">VEHICLES</h2>
+			<table id="tblVehicles" style="width:90%;margin:0px auto;text-align:center;border-top:2px solid black;margin-top:55px;">
+				<tbody id="tblVehiclesBody">
+					<tr><th>ID</th><th>YEAR</th><th>MAKE</th><th>TYPE</th><th>PRICE</th></tr>
+				</tbody>
+			</table>
+			<br/>
+			<h2 style="text-align:center;">BRANCHES</h2>
+			<table id="tblBranches" style="width:90%;margin:0px auto;text-align:center;border-top:2px solid black;margin-top:55px;">
+				<tbody id="tblBranchesBody">
+					<tr><th>ID</th><th>NAME</th><th>ADDRESS</th><th>CITY</th><th>ZIP</th><th>PHONE</th><th>STATE</th></tr>
+				</tbody>
+			</table>
+			<br/>
+			<h2 style="text-align:center;">INVENTORY</h2>
+			<table id="tblInventory" style="width:90%;margin:0px auto;text-align:center;border-top:2px solid black;margin-top:55px;">
+				<tbody id="tblInventoryBody">
+					<tr><th>ID</th><th>VEHICLE ID</th><th>BRANCH ID</th><th>QUANTITY</th></tr>
+				</tbody>
+			</table>
+		</div>
+		<script type="text/javascript" src="./script.js"></script>
+	</body>
+<html>
