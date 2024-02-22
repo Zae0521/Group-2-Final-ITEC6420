@@ -1,4 +1,4 @@
-var backendURL = "http://localhost:8080";
+var backendURL = "http://34.125.42.132:8080";
 
 window.onload = function(event)
 {
