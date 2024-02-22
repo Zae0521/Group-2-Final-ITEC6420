@@ -18,9 +18,6 @@ public class Inventory {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "carId")
-	private Integer carId;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "foreign_car_id")
 	private Car carObject = new Car();
@@ -29,9 +26,6 @@ public class Inventory {
 	@JoinColumn(name = "foreign_branch_id")
 	private Branch branchObject = new Branch();
 
-	@Column(name = "branchId")
-	private Integer branchId;
-	
 	@Column(name = "quantity")
 	private Integer quantity;
 
@@ -44,21 +38,19 @@ public class Inventory {
 	}
 
 	public Integer getCarId() {
-		return carId;
+		return carObject.getId();
 	}
 
 	public void setCarId(Integer carId) {
 		this.carObject.setId(carId);
-		this.carId = carId;
 	}
 
 	public Integer getBranchId() {
-		return branchId;
+		return branchObject.getId();
 	}
 	
 	public void setBranchId(Integer branchId) {
 		this.branchObject.setId(branchId);
-		this.branchId = branchId;
 	}
 
 	public Integer getQuantity() {
