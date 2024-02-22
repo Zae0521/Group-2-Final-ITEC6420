@@ -54,6 +54,11 @@ java -jar *.jar
 
 **
 
+code deltas for foreign key constraint support:
+  https://www.baeldung.com/jpa-joincolumn-vs-mappedby
+
+**
+
 # spring boot automatically configures the db to have proper entities--
 #   this section is not necessary.
 
