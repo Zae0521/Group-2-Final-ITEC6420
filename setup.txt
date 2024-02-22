@@ -47,7 +47,14 @@ sudo apt install -y maven mysql-client-8.0/focal-updates net-tools apache2
 #   mind the dialect.
 # 
 
-# build + run.
+# setup and deploy webpage frontend.
+# 
+sudo systemctl stop apache2
+sudo cp index.html /var/www/html/
+sudo cp script.js /var/www/html/
+sudo systemctl restart apache2
+
+# build + run rest service.
 mvn package -DskipTests # in dir. containing pom.xml
 cd target
 java -jar *.jar
@@ -136,4 +143,9 @@ CREATE TABLE inventory (
   FOREIGN KEY (carId)    REFERENCES cars(id),
   FOREIGN KEY (branchId) REFERENCES branches(id),
 );
+
+**
+
+location of adam's frontend page:
+  wget https://testing.recursive-dynamics.com/TEMP
 
