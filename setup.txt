@@ -1,0 +1,134 @@
+# setup for vm-mysql1:
+create vm @ gcp
+open firewall @ 0.0.0.0/0:3306
+
+# apt.
+sudo apt update
+sudo apt install -y mysql-server/focal-updates mysql-client-8.0/focal-updates net-tools
+systemctl status mysql
+
+# configure mysql database as root/1234.
+# configure mysql to have the database name used in app.
+# after these steps: requires `mysql -uroot -p1234`
+# 
+sudo -i
+mysql_secure_installation # all 'no', then 'yes' for 'reload privilege tables'
+mysql
+CREATE DATABASE g2_final;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
+FLUSH PRIVILEGES;
+SELECT user, authentication_string FROM mysql.user;
+
+# configure mysql to allow remote access.
+CREATE USER 'root'@'%' IDENTIFIED BY '1234';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+FLUSH PRIVILEGES;
+
+# configure mysqld to listen on 0.0.0.0
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf # /bind-address
+sudo systemctl restart mysql
+sudo systemctl status mysql
+
+# from vm-rest:
+mysql -uroot -p1234 -hvm-mysql1 # to verify connectivity to db
+
+**
+
+# setup for vm-rest:
+create vm @ gcp
+open firewall @ 0.0.0.0/0:8080
+
+# apt.
+sudo apt update
+sudo apt install -y maven mysql-client-8.0/focal-updates net-tools
+
+# fix application.yml or application.properties:
+#   mind the remote host.
+#   mind the dialect.
+# 
+
+# build + run.
+mvn package -DskipTests # in dir. containing pom.xml
+cd target
+java -jar *.jar
+
+**
+
+# spring boot automatically configures the db to have proper entities--
+#   this section is not necessary.
+
+# configure server to have database entities
+# 
+# from bean/Car.java
+@Table(name = "cars")
+@Id, Integer, name 'id'
+@Column(name="model"), String
+@Column(name="type"), String
+@Column(name="year"), String
+@Column(name="price"), Double
+
+# from bean/Branch.java
+@Table(name="branches")
+@Id, Integer, name 'id'
+@Column(name="branchName"), String
+@Column(name="address"), String
+@Column(name="city"), String
+@Column(name="state"), String
+@Column(name="zip"), String
+@Column(name="phone"), String
+
+# from bean/Inventory.java
+@Table(name="inventory")
+@Id, Integer, name 'id'
+@Column(name="carId"), Integer
+@Column(name="branchId"), Integer
+@Column(name="quantity"), Integer
+
+# to create table:
+# to specify integer 'datatype': `INT`
+# to specify string 'datatype': `VARCHAR(255)`
+# to specify floating 'datatype': `DOUBLE(6, 2)` or `DECIMAL(6, 2)`
+CREATE TABLE table_name (
+  column1 datatype,
+  column2 datatype,
+  column3 datatype,
+  PRIMARY KEY (column1)
+  ...
+);
+
+# or:
+ALTER TABLE table_name ADD PRIMARY KEY (column1);
+ALTER TABLE table_name DROP PRIMARY KEY;
+
+# so, as SQL commands:
+
+# snippet for enacting this database:
+CREATE TABLE cars (
+  id      INT NOT NULL,
+  model   VARCHAR(255),
+  type    VARCHAR(255),
+  year    VARCHAR(255),
+  price   DECIMAL(6, 2),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE branches (
+  id         INT NOT NULL,
+  branchName VARCHAR(255),
+  address    VARCHAR(255),
+  city       VARCHAR(255),
+  state      VARCHAR(255),
+  zip        VARCHAR(255),
+  phone      VARCHAR(255),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE inventory (
+  id        INT NOT NULL,
+  carId     INT NOT NULL,
+  branchId  INT NOT NULL,
+  quantity  INT,
+  FOREIGN KEY (carId)    REFERENCES cars(id),
+  FOREIGN KEY (branchId) REFERENCES branches(id),
+);
+
