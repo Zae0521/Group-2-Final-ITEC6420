@@ -199,19 +199,17 @@ function get_cars() {
 
   // report.
   var json_data = JSON.parse(data);
+  var new_td = '';
   for (var each_vehicle of json_data) {
-    var to_append = '';
-    to_append = to_append + ("<tr>");
-    to_append = to_append + ("<td>" + each_vehicle.id + "</td>");
-    to_append = to_append + ("<td>" + each_vehicle.model + "</td>");
-    to_append = to_append + ("<td>" + each_vehicle.type + "</td>");
-    to_append = to_append + ("<td>" + each_vehicle.year + "</td>");
-    to_append = to_append + ("<td>" + each_vehicle.price + "</td>");
-    to_append = to_append + ("</tr>");
-
-    let old = tblVehiclesBody.innerHTML;
-    tblVehiclesBody.innerHTML = old + to_append;
+    new_td = new_td + ("<tr>");
+    new_td = new_td + ("<td>" + each_vehicle.id + "</td>");
+    new_td = new_td + ("<td>" + each_vehicle.model + "</td>");
+    new_td = new_td + ("<td>" + each_vehicle.type + "</td>");
+    new_td = new_td + ("<td>" + each_vehicle.year + "</td>");
+    new_td = new_td + ("<td>" + each_vehicle.price + "</td>");
+    new_td = new_td + ("</tr>");
   }
+  tblVehiclesBody.innerHTML = new_td;
 }
 
 function get_branches() {
@@ -235,21 +233,19 @@ function get_branches() {
 
   // report.
   var json_data = JSON.parse(data);
+  var new_td = '';
   for (var each_branch of json_data) {
-    var to_append = '';
-    to_append = to_append + ("<tr>");
-    to_append = to_append + ("<td>" + each_branch.id + "</td>");
-    to_append = to_append + ("<td>" + each_branch.branchName + "</td>");
-    to_append = to_append + ("<td>" + each_branch.address + "</td>");
-    to_append = to_append + ("<td>" + each_branch.city + "</td>");
-    to_append = to_append + ("<td>" + each_branch.state + "</td>");
-    to_append = to_append + ("<td>" + each_branch.zip + "</td>");
-    to_append = to_append + ("<td>" + each_branch.phone + "</td>");
-    to_append = to_append + ("</tr>");
-
-    let old = tblBranchesBody.innerHTML;
-    tblBranchesBody.innerHTML = old + to_append;
+    new_td = new_td + ("<tr>");
+    new_td = new_td + ("<td>" + each_branch.id + "</td>");
+    new_td = new_td + ("<td>" + each_branch.branchName + "</td>");
+    new_td = new_td + ("<td>" + each_branch.address + "</td>");
+    new_td = new_td + ("<td>" + each_branch.city + "</td>");
+    new_td = new_td + ("<td>" + each_branch.state + "</td>");
+    new_td = new_td + ("<td>" + each_branch.zip + "</td>");
+    new_td = new_td + ("<td>" + each_branch.phone + "</td>");
+    new_td = new_td + ("</tr>");
   }
+  tblBranchesBody.innerHTML = new_td;
 }
 
 function get_inventories() {
@@ -273,17 +269,15 @@ function get_inventories() {
 
   // report.
   var json_data = JSON.parse(data);
+  var new_td = '';
   for (var each_inventory of json_data) {
-    var to_append = '';
-    to_append = to_append + ("<tr>");
-    to_append = to_append + ("<td>" + each_inventory.id + "</td>");
-    to_append = to_append + ("<td>" + each_inventory.carId + "</td>");
-    to_append = to_append + ("<td>" + each_inventory.branchId + "</td>");
-    to_append = to_append + ("<td>" + each_inventory.quantity + "</td>");
-    to_append = to_append + ("</tr>");
-
-    let old = tblInventoryBody.innerHTML;
-    tblInventoryBody.innerHTML = old + to_append;
+    new_td = new_td + ("<tr>");
+    new_td = new_td + ("<td>" + each_inventory.id + "</td>");
+    new_td = new_td + ("<td>" + each_inventory.carId + "</td>");
+    new_td = new_td + ("<td>" + each_inventory.branchId + "</td>");
+    new_td = new_td + ("<td>" + each_inventory.quantity + "</td>");
+    new_td = new_td + ("</tr>");
   }
+  tblInventoryBody.innerHTML = new_td;
 }
 
