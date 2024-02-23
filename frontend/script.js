@@ -83,60 +83,207 @@ function on_car(arg_http_verb) {
     return;
   }
 
-  console.log(JSON.stringify(http_body));
-
   // send.
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify(http_body));
 }
 
 function on_branch(arg_http_verb) {
+
+  // setup.
+  var xhr = new XMLHttpRequest();
+  var http_body = null;
+
+  // state change.
+  xhr.onreadystatechange = function() { };
+
+  // build http body.
+  if (arg_http_verb === 'CREATE') {
+    xhr.open('POST', `${url_restapi}/${ep_branch_create}`, true);
+    http_body = {
+      branchName : document.getElementById('braName').value,
+      address    : document.getElementById('braAddress').value,
+      city       : document.getElementById('braCity').value,
+      zip        : document.getElementById('braZip').value,
+      phone      : document.getElementById('braPhone').value,
+      state      : document.getElementById('braState').value
+    };
+  }
+  else if (arg_http_verb === 'UPDATE') {
+    xhr.open('PUT', `${url_restapi}/${ep_branch_update}`, true);
+    http_body = {
+      id         : document.getElementById('braID').value,
+      branchName : document.getElementById('braName').value,
+      address    : document.getElementById('braAddress').value,
+      city       : document.getElementById('braCity').value,
+      zip        : document.getElementById('braZip').value,
+      phone      : document.getElementById('braPhone').value,
+      state      : document.getElementById('braState').value
+    };
+  }
+  else if (arg_http_verb === 'DELETE') {
+    const ep_delete_id = ep_branch_id(document.getElementById('braID').value);
+    xhr.open('DELETE', `${url_restapi}/${ep_delete_id}`, true);
+    http_body = { };
+  }
+  else {
+    console.log(`on_branch: unsupported verb ${arg_http_verb}`);
+    return;
+  }
+
+  // send.
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(http_body));
 }
 
 function on_inventory(arg_http_verb) {
+
+  // setup.
+  var xhr = new XMLHttpRequest();
+  var http_body = null;
+
+  // state change.
+  xhr.onreadystatechange = function() { };
+
+  // build http body.
+  if (arg_http_verb === 'CREATE') {
+    xhr.open('POST', `${url_restapi}/${ep_inventory_create}`, true);
+    http_body = {
+      carId    : document.getElementById("invVeh").value,
+      branchId : document.getElementById("invBra").value,
+      quantity : document.getElementById("invQuantity").value
+    };
+  }
+  else if (arg_http_verb === 'UPDATE') {
+    xhr.open('PUT', `${url_restapi}/${ep_inventory_update}`, true);
+    http_body = {
+      id       : document.getElementById('invID').value,
+      carId    : document.getElementById("invVeh").value,
+      branchId : document.getElementById("invBra").value,
+      quantity : document.getElementById("invQuantity").value
+    };
+  }
+  else if (arg_http_verb === 'DELETE') {
+    const ep_delete_id = ep_inventory_id(document.getElementById('invID').value);
+    xhr.open('DELETE', `${url_restapi}/${ep_delete_id}`, true);
+    http_body = { };
+  }
+  else {
+    console.log(`on_inventory: unsupported verb ${arg_http_verb}`);
+    return;
+  }
+
+  // send.
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(http_body));
 }
 
-function jsonRecordsToTables(jsonRecords)
-{
-	//example JSON = "jsonRecords vehicles: [ { name: 'Alice', age: 25 }, { name: 'Bob', age: 30 }, { name: 'Charlie', age: 35 } ], branches: ..."
-	//So, vehicles = object array, branches = object array, inventory = object array
-	var data = JSON.parse(jsonRecords);
-	
-	//Vehicles
-	var tblVehiclesBody = document.getElementById("tblVehiclesBody");
-	for (var vehicle of data.vehicles)
-	{
-		var newRow = "<tr>";
-		for (var key in vehicle)
-		{
-			//console.log(key + ": " + vehicle[key]);
-			tblVehiclesBody.append("<td>" + vehicle[key] + "</td>");
-		}
-		tblVehiclesBody.append(newRow + "</tr>");
-	}
-	//Branches
-	var tblBranchesBody = document.getElementById("tblBranchesBody");
-	for (var branch of data.branches)
-	{
-		var newRow = "<tr>";
-		for (var key in branch)
-		{
-			//console.log(key + ": " + branch[key]);
-			tblBranchesBody.append("<td>" + branch[key] + "</td>");
-		}
-		tblBranchesBody.append(newRow + "</tr>");
-	}
-	
-	//Inventories
-	var tblInventoriesBody = document.getElementById("tblInventoriesBody");
-	for (var inventory of data.inventories)
-	{
-		var newRow = "<tr>";
-		for (var key in inventory)
-		{
-			//console.log(key + ": " + inventory[key]);
-			tblInventoriesBody.append("<td>" + inventory[key] + "</td>");
-		}
-		tblInventoriesBody.append(newRow + "</tr>");
-	}
+function get_cars() {
+
+  // vars.
+  var xhr = new XMLHttpRequest();
+  var data = '';
+  var tblVehiclesBody = document.getElementById("tblVehiclesBody");
+
+  // setup.
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      data = xhr.responseText;
+    }
+  }
+
+  // send.
+  xhr.open('GET', `${url_restapi}/${ep_car_read_all}`, false);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({ }));
+
+  // report.
+  var json_data = JSON.parse(data);
+  for (var each_vehicle of json_data) {
+    var to_append = '';
+    to_append = to_append + ("<tr>");
+    to_append = to_append + ("<td>" + each_vehicle.id + "</td>");
+    to_append = to_append + ("<td>" + each_vehicle.model + "</td>");
+    to_append = to_append + ("<td>" + each_vehicle.type + "</td>");
+    to_append = to_append + ("<td>" + each_vehicle.year + "</td>");
+    to_append = to_append + ("<td>" + each_vehicle.price + "</td>");
+    to_append = to_append + ("</tr>");
+
+    let old = tblVehiclesBody.innerHTML;
+    tblVehiclesBody.innerHTML = old + to_append;
+  }
 }
+
+function get_branches() {
+
+  // vars.
+  var xhr = new XMLHttpRequest();
+  var data = '';
+  var tblBranchesBody = document.getElementById("tblBranchesBody");
+
+  // setup.
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      data = xhr.responseText;
+    }
+  }
+
+  // send.
+  xhr.open('GET', `${url_restapi}/${ep_branch_read_all}`, false);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({ }));
+
+  // report.
+  var json_data = JSON.parse(data);
+  for (var each_branch of json_data) {
+    var to_append = '';
+    to_append = to_append + ("<tr>");
+    to_append = to_append + ("<td>" + each_branch.id + "</td>");
+    to_append = to_append + ("<td>" + each_branch.branchName + "</td>");
+    to_append = to_append + ("<td>" + each_branch.address + "</td>");
+    to_append = to_append + ("<td>" + each_branch.city + "</td>");
+    to_append = to_append + ("<td>" + each_branch.state + "</td>");
+    to_append = to_append + ("<td>" + each_branch.zip + "</td>");
+    to_append = to_append + ("<td>" + each_branch.phone + "</td>");
+    to_append = to_append + ("</tr>");
+
+    let old = tblBranchesBody.innerHTML;
+    tblBranchesBody.innerHTML = old + to_append;
+  }
+}
+
+function get_inventories() {
+
+  // vars.
+  var xhr = new XMLHttpRequest();
+  var data = '';
+  var tblInventoryBody = document.getElementById("tblInventoryBody");
+
+  // setup.
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      data = xhr.responseText;
+    }
+  }
+
+  // send.
+  xhr.open('GET', `${url_restapi}/${ep_inventory_read_all}`, false);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({ }));
+
+  // report.
+  var json_data = JSON.parse(data);
+  for (var each_inventory of json_data) {
+    var to_append = '';
+    to_append = to_append + ("<tr>");
+    to_append = to_append + ("<td>" + each_inventory.id + "</td>");
+    to_append = to_append + ("<td>" + each_inventory.carId + "</td>");
+    to_append = to_append + ("<td>" + each_inventory.branchId + "</td>");
+    to_append = to_append + ("<td>" + each_inventory.quantity + "</td>");
+    to_append = to_append + ("</tr>");
+
+    let old = tblInventoryBody.innerHTML;
+    tblInventoryBody.innerHTML = old + to_append;
+  }
+}
+

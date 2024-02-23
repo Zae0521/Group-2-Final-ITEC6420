@@ -20,22 +20,25 @@
 		</div>
 		<div id="recordsArea" style="margin-top:100px;">
 			<h1 style="text-align:center;">CURRENT RECORDS</h1>
+			<input type="button" id="btnGetVehicles" value="REFRESH VEHICLES" onclick="get_cars();" style="padding:3px;font-weight:bolder;cursor:pointer;"/>
 			<br/>
 			<h2 style="text-align:center;">VEHICLES</h2>
 			<table id="tblVehicles" style="width:90%;margin:0px auto;text-align:center;border-top:2px solid black;margin-top:55px;">
 				<tbody id="tblVehiclesBody">
-					<tr><th>ID</th><th>YEAR</th><th>MAKE</th><th>TYPE</th><th>PRICE</th></tr>
+					<tr><th>ID</th><th>MODEL</th><th>TYPE</th><th>YEAR</th><th>PRICE</th></tr>
 				</tbody>
 			</table>
 			<br/>
 			<h2 style="text-align:center;">BRANCHES</h2>
+			<input type="button" id="btnGetBranches" value="REFRESH BRANCHES" onclick="get_branches();" style="padding:3px;font-weight:bolder;cursor:pointer;"/>
 			<table id="tblBranches" style="width:90%;margin:0px auto;text-align:center;border-top:2px solid black;margin-top:55px;">
 				<tbody id="tblBranchesBody">
-					<tr><th>ID</th><th>NAME</th><th>ADDRESS</th><th>CITY</th><th>ZIP</th><th>PHONE</th><th>STATE</th></tr>
+					<tr><th>ID</th><th>NAME</th><th>ADDRESS</th><th>CITY</th><th>STATE</th><th>ZIP</th><th>PHONE</th></tr>
 				</tbody>
 			</table>
 			<br/>
 			<h2 style="text-align:center;">INVENTORY</h2>
+			<input type="button" id="btnGetInventories" value="REFRESH INVENTORIES" onclick="get_inventories();" style="padding:3px;font-weight:bolder;cursor:pointer;"/>
 			<table id="tblInventory" style="width:90%;margin:0px auto;text-align:center;border-top:2px solid black;margin-top:55px;">
 				<tbody id="tblInventoryBody">
 					<tr><th>ID</th><th>VEHICLE ID</th><th>BRANCH ID</th><th>QUANTITY</th></tr>
